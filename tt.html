@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELZY JPM - Jasa Push Member</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0a0a1a;color:#fff;min-height:100vh;padding-bottom:80px}
+header{position:sticky;top:0;background:#0a0a1a;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1f1f3a;z-index:100}
+.logo{font-size:20px;font-weight:bold;color:#00d4ff}
+.logo span{color:#7b2ff7}
+.menu-btn{background:none;border:none;color:#fff;font-size:22px;cursor:pointer}
+nav{display:none;position:absolute;top:100%;left:0;width:100%;background:#0a0a1a;flex-direction:column;padding:15px;gap:12px;border-bottom:1px solid #1f1f3a}
+nav.show{display:flex}
+nav a{color:#a0a0b0;text-decoration:none;padding:8px 0}
+nav a:hover{color:#00d4ff}
+.hero{padding:50px 20px;text-align:center}
+.hero h1{font-size:32px;margin-bottom:15px;color:#00d4ff}
+.hero p{color:#a0a0b0;margin-bottom:25px;line-height:1.6}
+.btn{display:inline-block;padding:12px 24px;background:#00d4ff;color:#000;text-decoration:none;border-radius:8px;font-weight:bold;border:none;cursor:pointer;font-size:14px;margin:5px}
+.btn:hover{background:#7b2ff7;color:#fff}
+.btn-block{display:block;width:100%;padding:15px;background:#00d4ff;color:#000;border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:15px}
+.btn-block:hover{background:#7b2ff7;color:#fff}
+section{padding:30px 20px}
+.section-title{text-align:center;margin-bottom:25px}
+.section-title h2{font-size:24px;color:#00d4ff;margin-bottom:8px}
+.section-title p{color:#a0a0b0;font-size:14px}
+.card{background:#141428;border:1px solid #1f1f3a;border-radius:12px;padding:20px;margin-bottom:15px;max-width:600px;margin-left:auto;margin-right:auto}
+.stat-row{display:flex;justify-content:space-between;margin-bottom:15px;flex-wrap:wrap;gap:10px}
+.stat{flex:1;min-width:100px;background:#0a0a1a;padding:12px;border-radius:8px;text-align:center}
+.stat .val{font-size:20px;font-weight:bold;color:#00d4ff}
+.stat .lbl{font-size:11px;color:#a0a0b0;margin-top:4px}
+.tracker-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #1f1f3a;font-size:13px}
+.tracker-item:last-child{border-bottom:none}
+.tracker-item .name{font-weight:bold}
+.tracker-item .sub{font-size:11px;color:#a0a0b0}
+.badge{padding:4px 10px;border-radius:20px;font-size:11px}
+.badge-ok{background:#00e676;color:#000}
+.badge-proses{background:#ffab00;color:#000}
+.price-card{background:#141428;border:1px solid #1f1f3a;border-radius:12px;padding:25px;text-align:center;margin-bottom:15px;max-width:400px;margin-left:auto;margin-right:auto;position:relative}
+.price-card.popular{border-color:#00d4ff}
+.popular-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#00d4ff;color:#000;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:bold}
+.price-card h3{font-size:18px;margin-bottom:12px}
+.price-card .price{font-size:28px;font-weight:bold;color:#00d4ff;margin-bottom:8px}
+.price-card .member{color:#a0a0b0;margin-bottom:15px}
+.price-card .member b{color:#fff;font-size:18px}
+.pay-box{background:#141428;border:1px solid #1f1f3a;border-radius:12px;padding:25px;text-align:center;max-width:400px;margin:0 auto}
+.qris{background:#fff;padding:10px;border-radius:10px;display:inline-block;margin:15px 0}
+.qris img{width:220px;height:220px;object-fit:contain;display:block;border-radius:6px}
+.form-box{background:#141428;border:1px solid #1f1f3a;border-radius:12px;padding:20px;max-width:500px;margin:0 auto}
+label{display:block;margin-bottom:6px;color:#a0a0b0;font-size:13px}
+input,select{width:100%;padding:12px;background:#0a0a1a;border:1px solid #1f1f3a;border-radius:8px;color:#fff;font-size:14px;margin-bottom:15px;font-family:Arial}
+input:focus,select:focus{outline:none;border-color:#00d4ff}
+.upload-btn{display:block;border:2px dashed #1f1f3a;border-radius:10px;padding:25px;text-align:center;cursor:pointer;background:#0a0a1a;margin-bottom:15px}
+.upload-btn:hover{border-color:#00d4ff}
+.upload-btn .icon{font-size:32px;color:#00d4ff;margin-bottom:8px}
+.upload-btn .text{color:#a0a0b0;font-size:13px}
+#fileInput{display:none}
+#preview{display:none;text-align:center;margin-bottom:15px;padding:12px;background:#0a0a1a;border-radius:10px;border:1px solid #00d4ff}
+#preview img{max-width:100%;max-height:200px;border-radius:8px}
+#preview .fname{font-size:11px;color:#a0a0b0;margin-top:6px;word-break:break-all}
+.wa-float{position:fixed;bottom:20px;right:20px;width:55px;height:55px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;text-decoration:none;box-shadow:0 4px 15px rgba(37,211,102,0.5);z-index:999}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(200px);background:#00d4ff;color:#000;padding:12px 20px;border-radius:8px;font-size:13px;font-weight:bold;z-index:10000;transition:transform 0.3s;max-width:90%}
+.toast.show{transform:translateX(-50%) translateY(0)}
+footer{text-align:center;padding:25px 20px;color:#a0a0b0;font-size:12px;border-top:1px solid #1f1f3a;margin-top:30px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🚀 ELZY <span>JPM</span></div>
+  <button class="menu-btn" onclick="document.getElementById('menu').classList.toggle('show')">☰</button>
+  <nav id="menu">
+    <a href="#home">Beranda</a>
+    <a href="#tracker">Live Tracker</a>
+    <a href="#harga">Harga</a>
+    <a href="#bayar">Pembayaran</a>
+    <a href="#bukti">Bukti Transfer</a>
+  </nav>
+</header>
+
+<div class="hero" id="home">
+  <h1>ELZY JPM<br>Jasa Push Member</h1>
+  <p>Tingkatkan member grup WhatsApp, Telegram, dan platform lain dengan cepat, aman, dan bergaransi.</p>
+  <a href="#harga" class="btn">Lihat Harga</a>
+  <a href="https://wa.me/6287756052534" target="_blank" class="btn">Chat Admin</a>
+</div>
+
+<section id="tracker">
+  <div class="section-title">
+    <h2>📡 Live Tracker</h2>
+    <p>Pantau pesanan real-time</p>
+  </div>
+  <div class="card">
+    <div class="stat-row">
+      <div class="stat"><div class="val" id="totalOrders">1.247</div><div class="lbl">Pesanan</div></div>
+      <div class="stat"><div class="val" id="totalMembers">89.430</div><div class="lbl">Member</div></div>
+      <div class="stat"><div class="val" style="color:#00e676">99.8%</div><div class="lbl">Sukses</div></div>
+    </div>
+    <div id="trackerList"></div>
+  </div>
+</section>
+
+<section id="harga">
+  <div class="section-title">
+    <h2>💰 Daftar Harga</h2>
+    <p>Pilih paket sesuai kebutuhan</p>
+  </div>
+  <div class="price-card">
+    <h3>🚀 Paket Hemat</h3>
+    <div class="price">Rp 10.000</div>
+    <div class="member"><b>35</b> Member</div>
+    <button class="btn" onclick="pilihPaket('Paket Hemat - Rp 10.000 - 35 Member')">Pesan</button>
+  </div>
+  <div class="price-card popular">
+    <div class="popular-badge">TERPOPULER</div>
+    <h3>⭐ Paket Populer</h3>
+    <div class="price">Rp 15.000</div>
+    <div class="member"><b>50</b> Member</div>
+    <button class="btn" onclick="pilihPaket('Paket Populer - Rp 15.000 - 50 Member')">Pesan</button>
+  </div>
+  <div class="price-card">
+    <h3>💎 Paket Sultan</h3>
+    <div class="price">Rp 25.000</div>
+    <div class="member"><b>100</b> Member</div>
+    <button class="btn" onclick="pilihPaket('Paket Sultan - Rp 25.000 - 100 Member')">Pesan</button>
+  </div>
+</section>
+
+<section id="bayar">
+  <div class="section-title">
+    <h2>💳 Pembayaran QRIS</h2>
+    <p>Scan QRIS di bawah</p>
+  </div>
+  <div class="pay-box">
+    <div class="qris">
+      <img src="https://i.ibb.co.com/S4gdS2WF/WA-1790483542747.jpg" alt="QRIS" onerror="this.src='https://via.placeholder.com/220x220/ffffff/000000?text=QRIS+ELZY+JPM'">
+    </div>
+    <p style="color:#a0a0b0;font-size:13px;margin-top:10px">Setelah bayar, isi form bukti transfer di bawah 👇</p>
+  </div>
+</section>
+
+<section id="bukti">
+  <div class="section-title">
+    <h2>📸 Bukti Transfer</h2>
+    <p>Isi data & upload bukti pembayaran</p>
+  </div>
+  <div class="form-box">
+    <label>Nama / Username</label>
+    <input type="text" id="nama" placeholder="Masukkan nama Anda">
+
+    <label>No. WhatsApp</label>
+    <input type="tel" id="wa" placeholder="08xxxxxxxxxx">
+
+    <label>Paket yang Dibeli</label>
+    <select id="paket">
+      <option value="">-- Pilih Paket --</option>
+      <option value="Paket Hemat - Rp 10.000 - 35 Member">Paket Hemat - Rp 10.000 (35 Member)</option>
+      <option value="Paket Populer - Rp 15.000 - 50 Member">Paket Populer - Rp 15.000 (50 Member)</option>
+      <option value="Paket Sultan - Rp 25.000 - 100 Member">Paket Sultan - Rp 25.000 (100 Member)</option>
+    </select>
+
+    <label>Link / Tujuan Push</label>
+    <input type="text" id="link" placeholder="https://chat.whatsapp.com/...">
+
+    <label>Upload Bukti Transfer</label>
+    <label for="fileInput" class="upload-btn" id="uploadBtn">
+      <div class="icon">📷</div>
+      <div class="text"><b style="color:#00d4ff">Klik di sini untuk pilih foto</b><br>Bisa dari Galeri atau Kamera</div>
+    </label>
+    <input type="file" id="fileInput" accept="image/*">
+
+    <div id="preview">
+      <img id="previewImg" src="" alt="Preview">
+      <div class="fname" id="fname"></div>
+      <button type="button" class="btn" style="background:#ff5252;color:#fff;margin-top:10px" onclick="hapusFoto()">Hapus Foto</button>
+    </div>
+
+    <button class="btn-block" id="btnKirim">📤 Kirim Bukti Transfer</button>
+  </div>
+</section>
+
+<footer>
+  <p><b style="color:#00d4ff;font-size:14px">ELZY JPM</b></p>
+  <p>© 2026 ELZY JPM - Jasa Push Member Terpercaya</p>
+  <p>WA: <a href="https://wa.me/6287756052534" style="color:#00d4ff">+62 877-6052-534</a></p>
+</footer>
+
+<a href="https://wa.me/6287756052534" target="_blank" class="wa-float">💬</a>
+<div class="toast" id="toast">Pesan</div>
+
+<script>
+var namaSaya=['Andi','Budi','Citra','Dewi','Eko','Fajar','Gita','Hana','Irfan','Joko','Kiki','Lina','Maya','Nanda','Oki','Putri','Rian','Sari','Tono','Umar'];
+var paketSaya=['35 Member','50 Member','100 Member'];
+
+function randomItem(a){return a[Math.floor(Math.random()*a.length)]}
+
+function buatItem(){
+  var nama=randomItem(namaSaya);
+  var pkg=randomItem(paketSaya);
+  var status=Math.random()>0.3?'ok':'proses';
+  var waktu=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+  var div=document.createElement('div');
+  div.className='tracker-item';
+  div.innerHTML='<div><div class="name">'+nama+'***</div><div class="sub">'+pkg+' • '+waktu+'</div></div><span class="badge badge-'+status+'">'+(status==='ok'?'Sukses':'Proses')+'</span>';
+  return div;
+}
+
+var list=document.getElementById('trackerList');
+for(var i=0;i<5;i++){list.appendChild(buatItem())}
+
+setInterval(function(){
+  list.insertBefore(buatItem(),list.firstChild);
+  if(list.children.length>15){list.removeChild(list.lastChild)}
+},5000);
+
+var order=1247,member=89430;
+setInterval(function(){
+  order+=Math.floor(Math.random()*3)+1;
+  member+=Math.floor(Math.random()*30)+10;
+  document.getElementById('totalOrders').textContent=order.toLocaleString('id-ID');
+  document.getElementById('totalMembers').textContent=member.toLocaleString('id-ID');
+},4000);
+
+function pilihPaket(val){
+  document.getElementById('paket').value=val;
+  tampilToast('Paket dipilih: '+val.split(' - ')[0]);
+  document.getElementById('bayar').scrollIntoView({behavior:'smooth'});
+}
+
+function tampilToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},2500);
+}
+
+var fileTerpilih=null;
+var fileInput=document.getElementById('fileInput');
+var preview=document.getElementById('preview');
+var previewImg=document.getElementById('previewImg');
+var fname=document.getElementById('fname');
+var uploadBtn=document.getElementById('uploadBtn');
+
+fileInput.addEventListener('change',function(e){
+  var f=e.target.files[0];
+  if(!f)return;
+  if(f.type.indexOf('image')!==0){tampilToast('Harus berupa gambar!');return;}
+  fileTerpilih=f;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    previewImg.src=ev.target.result;
+    fname.textContent=f.name+' ('+Math.round(f.size/1024)+' KB)';
+    preview.style.display='block';
+    uploadBtn.style.display='none';
+    tampilToast('Foto berhasil dipilih ✓');
+  };
+  reader.readAsDataURL(f);
+});
+
+function hapusFoto(){
+  fileTerpilih=null;
+  fileInput.value='';
+  previewImg.src='';
+  preview.style.display='none';
+  uploadBtn.style.display='block';
+  tampilToast('Foto dihapus');
+}
+
+document.getElementById('btnKirim').addEventListener('click',function(){
+  var nama=document.getElementById('nama').value.trim();
+  var wa=document.getElementById('wa').value.trim();
+  var paket=document.getElementById('paket').value;
+  var link=document.getElementById('link').value.trim();
+
+  if(!nama){tampilToast('Nama belum diisi!');return;}
+  if(!wa){tampilToast('No. WhatsApp belum diisi!');return;}
+  if(!paket){tampilToast('Pilih paket dulu!');return;}
+  if(!link){tampilToast('Link tujuan belum diisi!');return;}
+  if(!fileTerpilih){tampilToast('Upload bukti transfer dulu!');return;}
+
+  var pesan='*BUKTI TRANSFER - ELZY JPM*%0A%0A';
+  pesan+='Nama: '+encodeURIComponent(nama)+'%0A';
+  pesan+='No WA: '+encodeURIComponent(wa)+'%0A';
+  pesan+='Paket: '+encodeURIComponent(paket)+'%0A';
+  pesan+='Link Tujuan: '+encodeURIComponent(link)+'%0A%0A';
+  pesan+='Bukti transfer saya kirim di chat ini ya admin 🙏';
+
+  tampilToast('Membuka WhatsApp...');
+
+  var url='https://wa.me/6287756052534?text='+pesan;
+  setTimeout(function(){
+    window.location.href=url;
+  },700);
+});
+</script>
+</body>
+</html>
